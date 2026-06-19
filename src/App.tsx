@@ -160,7 +160,7 @@ function Profile() {
               </div>
             </div>
             <div className="profile-menu-item" style={{ cursor: 'default', color: 'var(--text3)' }}>
-              Demo mode — no sign-in required
+              Demo mode, no sign-in required
             </div>
           </div>
         </>
@@ -215,7 +215,7 @@ function IssueCard({ issue, onOpen }: { issue: Issue; onOpen: (i: Issue) => void
         {issue.page_number != null && <span className="pg" onClick={() => onOpen(issue)}>p{issue.page_number}</span>}
       </div>
       {snip && (
-        <button className="card-thumb" onClick={() => onOpen(issue)} title="Clipped from the drawing — click for the full page + bounding box">
+        <button className="card-thumb" onClick={() => onOpen(issue)} title="Clipped from the drawing. Click for the full page + bounding box">
           <SheetSvg sheet={snip.sheet} bbox={snip.bbox} mode="thumb"
             style={{ display: 'block', width: '100%', height: 150, background: '#fff' }} />
         </button>
@@ -270,7 +270,7 @@ function DetailModal({ issue, onClose }: { issue: Issue; onClose: () => void }) 
           <div className="detail-desc">
             The highlighted rectangle is the finding's <strong>bounding box</strong> on the page; the
             card thumbnail is that region <strong>clipped</strong> from the sheet. (Synthetic sample
-            drawing — no real planset data.)
+            drawing, no real planset data.)
           </div>
         )}
         <div className="detail-foot">
@@ -319,7 +319,7 @@ export default function App() {
           background: 'var(--purple-bg)', color: 'var(--purple-fg)', border: '1px solid var(--purple)',
           borderRadius: 'var(--r)', padding: '8px 14px', fontSize: 13, fontWeight: 600,
         }}>
-          Interactive demo · sample data only — not affiliated with any company or real project.
+          Interactive demo · sample data only. Not affiliated with any company or real project.
           The live tool runs an AI + rules pipeline over uploaded PDFs.
         </div>
 

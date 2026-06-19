@@ -1,5 +1,5 @@
 /* ============================================================================
-   Synthetic planset sheets — vector mock drawings used to demonstrate the
+   Synthetic planset sheets: vector mock drawings used to demonstrate the
    tool's "clip a snippet" and "bounding-box overlay" features WITHOUT any real
    (confidential) client planset imagery.
 
@@ -41,7 +41,7 @@ function Frame({ title, no }: { title: string; no: string }) {
       <rect x={W - 286} y={H - 78} width={278} height={70} fill="#fafbfc" stroke="#c9ced6" />
       <line x1={W - 286} y1={H - 52} x2={W - 8} y2={H - 52} stroke="#e4e7ec" />
       {T(W - 278, H - 60, title, { b: true, fs: 12 })}
-      {T(W - 278, H - 36, 'DEMO PLANSET — SAMPLE DATA', { fs: 10, c: '#98a2b3' })}
+      {T(W - 278, H - 36, 'DEMO PLANSET / SAMPLE DATA', { fs: 10, c: '#98a2b3' })}
       {T(W - 278, H - 18, no, { b: true, fs: 14, c: '#1d2939' })}
     </g>
   )
@@ -130,7 +130,7 @@ function GndSheet() {
       {T(206, 348, 'EGC (NEC 250.122)', { fs: 11, b: true, c: '#b42318' })}
       {/* ground ring + rods */}
       {Line(180, 460, 720, 460)}
-      {T(184, 452, 'GROUND RING — BARE 2/0 Cu', { fs: 10, c: '#98a2b3' })}
+      {T(184, 452, 'GROUND RING, BARE 2/0 Cu', { fs: 10, c: '#98a2b3' })}
       {[260, 380, 500, 620].map(rod)}
       {T(300, 560, 'GROUND RODS @ 6 ft MIN. SPACING', { fs: 10, c: '#027a48' })}
     </g>
@@ -143,7 +143,7 @@ function SchedSheet() {
     ['TAG', 'DESCRIPTION', 'SIZE', 'OCPD', 'RESULT'],
     ['F-1', 'AC collection feeder', '350 kcmil', '460A cont.', 'UNDERSIZED'],
     ['F-2', 'Inverter output', '4/0 Cu', '350A', 'OK'],
-    ['F-3', 'MV riser', '1/0 15kV', '—', 'OK'],
+    ['F-3', 'MV riser', '1/0 15kV', 'n/a', 'OK'],
   ]
   const y0 = 120
   const rh = 34
@@ -178,8 +178,8 @@ function SchedSheet() {
       {/* voltage drop + conduit fill summary */}
       {T(520, 330, 'VOLTAGE DROP / FILL SUMMARY', { b: true })}
       {[
-        ['VD — DC string', '1.2 %'], ['VD — AC collection', '0.8 %'],
-        ['VD — MV', '0.4 %'], ['Max conduit fill', '37 %'],
+        ['VD: DC string', '1.2 %'], ['VD: AC collection', '0.8 %'],
+        ['VD: MV', '0.4 %'], ['Max conduit fill', '37 %'],
       ].map(([k, v], i) => (
         <g key={k}>
           <rect x={520} y={348 + i * 30} width={440} height={30} fill={i % 2 ? '#fafbfc' : '#fff'} stroke="#e4e7ec" />
@@ -197,7 +197,7 @@ function CoverSheet() {
   return (
     <g>
       <Frame title="COVER SHEET" no="E-000" />
-      {T(40, 70, 'MAPLEWOOD SOLAR — 13.6 MWdc', { b: true, fs: 18, c: '#1d2939' })}
+      {T(40, 70, 'MAPLEWOOD SOLAR (13.6 MWdc)', { b: true, fs: 18, c: '#1d2939' })}
       {/* project info block */}
       {Box(40, 96, 440, 220, '#fff')}
       {[
@@ -236,7 +236,7 @@ const SHEETS: Record<SheetId, () => JSX.Element> = {
 // ── item_key → located region (sheet + bbox + caption) ──────────────────────
 export const SNIPPETS: Record<string, { sheet: SheetId; bbox: BBox; caption: string }> = {
   // SLD
-  ai_sld_six_disconnect: { sheet: 'sld', bbox: { x0: 190, y0: 232, x1: 560, y1: 326 }, caption: 'MV switchboard — 6 source disconnects' },
+  ai_sld_six_disconnect: { sheet: 'sld', bbox: { x0: 190, y0: 232, x1: 560, y1: 326 }, caption: 'MV switchboard, 6 source disconnects' },
   ai_sld_ampacity: { sheet: 'sld', bbox: { x0: 470, y0: 206, x1: 720, y1: 250 }, caption: 'Transformer feeder conductor callout' },
   ai_sld_ocpd: { sheet: 'sld', bbox: { x0: 180, y0: 336, x1: 320, y1: 420 }, caption: 'Inverter output OCPD' },
   ai_sld_surge: { sheet: 'sld', bbox: { x0: 712, y0: 240, x1: 840, y1: 330 }, caption: 'Surge arrester' },
@@ -249,14 +249,14 @@ export const SNIPPETS: Record<string, { sheet: SheetId; bbox: BBox; caption: str
   ai_gnd_deep_rods: { sheet: 'gnd', bbox: { x0: 180, y0: 444, x1: 720, y1: 570 }, caption: 'Ground rod array' },
   ai_gnd_deep_xfmr: { sheet: 'gnd', bbox: { x0: 558, y0: 160, x1: 860, y1: 216 }, caption: 'Transformer secondary grounding' },
   // Schedules / system info
-  electrical_wire_schedule: { sheet: 'sched', bbox: { x0: 38, y0: 152, x1: 962, y1: 188 }, caption: 'Conductor schedule — F-1 (undersized)' },
-  calc_dc_ac_ratio: { sheet: 'sched', bbox: { x0: 38, y0: 436, x1: 462, y1: 470 }, caption: 'System info — DC/AC ratio' },
-  calc_module_count: { sheet: 'sched', bbox: { x0: 38, y0: 346, x1: 462, y1: 380 }, caption: 'System info — module quantity' },
+  electrical_wire_schedule: { sheet: 'sched', bbox: { x0: 38, y0: 152, x1: 962, y1: 188 }, caption: 'Conductor schedule, F-1 (undersized)' },
+  calc_dc_ac_ratio: { sheet: 'sched', bbox: { x0: 38, y0: 436, x1: 462, y1: 470 }, caption: 'System info: DC/AC ratio' },
+  calc_module_count: { sheet: 'sched', bbox: { x0: 38, y0: 346, x1: 462, y1: 380 }, caption: 'System info: module quantity' },
   electrical_vdrop: { sheet: 'sched', bbox: { x0: 518, y0: 346, x1: 962, y1: 470 }, caption: 'Voltage-drop summary' },
   // Cover / index
   ai_cover_der_number: { sheet: 'cover', bbox: { x0: 48, y0: 228, x1: 480, y1: 262 }, caption: 'DER / interconnection number field' },
   ai_tb_eor_stamp: { sheet: 'cover', bbox: { x0: 552, y0: 112, x1: 690, y1: 250 }, caption: 'Engineer-of-Record stamp' },
-  drawing_index_missing: { sheet: 'cover', bbox: { x0: 38, y0: 432, x1: 562, y1: 468 }, caption: 'Drawing index — E-203 missing' },
+  drawing_index_missing: { sheet: 'cover', bbox: { x0: 38, y0: 432, x1: 562, y1: 468 }, caption: 'Drawing index: E-203 missing' },
 }
 
 const pad = (b: BBox, p: number): BBox => ({ x0: b.x0 - p, y0: b.y0 - p, x1: b.x1 + p, y1: b.y1 + p })
