@@ -24,6 +24,7 @@ finding for its evidence.
 
 - **Project + version history** — runs grouped by project and design stage (30 % / 60 % / 90 %), with non-destructive rerun versioning.
 - **Findings dashboard** — score cards, per-category coverage, severity, confidence, and supporting evidence for every check.
+- **Snippet clipping + bounding boxes** — each located finding shows a cropped "snippet" of its drawing region on the card, and opens to the full sheet with the finding's **bounding box** highlighted. (In this demo the sheets are *synthetic vector mock drawings* — no real planset imagery — so the clip/overlay feature can be shown without exposing confidential client drawings.)
 - **Multi-engine review model** — findings produced by AI vision, a rules engine, arithmetic validators, and cross-sheet consistency checks.
 
 ## Tech

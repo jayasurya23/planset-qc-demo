@@ -4,6 +4,7 @@ import {
   statusCounts, categorySummaries,
   type Run, type Issue, type Status, type Project,
 } from './demoData'
+import { SNIPPETS, SheetSvg } from './sheets'
 
 const STAGE_LABEL: Record<string, string> = {
   '30': '30%', '60': '60%', '90': '90%', IFC: 'IFC', AsBuilt: 'As-Built',
@@ -197,6 +198,7 @@ function ScoreCards({ run, active, onPick }: {
 function IssueCard({ issue, onOpen }: { issue: Issue; onOpen: (i: Issue) => void }) {
   const [showFull, setShowFull] = useState(false)
   const isAI = issue.item_key.startsWith('ai_')
+  const snip = SNIPPETS[issue.item_key]
   return (
     <div className={`card ${cardClass[issue.status]}`}>
       <div className="card-row">
@@ -212,6 +214,12 @@ function IssueCard({ issue, onOpen }: { issue: Issue; onOpen: (i: Issue) => void
         <span className="card-conf">{Math.round(issue.confidence * 100)}% conf.</span>
         {issue.page_number != null && <span className="pg" onClick={() => onOpen(issue)}>p{issue.page_number}</span>}
       </div>
+      {snip && (
+        <button className="card-thumb" onClick={() => onOpen(issue)} title="Clipped from the drawing — click for the full page + bounding box">
+          <SheetSvg sheet={snip.sheet} bbox={snip.bbox} mode="thumb"
+            style={{ display: 'block', width: '100%', height: 150, background: '#fff' }} />
+        </button>
+      )}
       {issue.evidence && (
         <div className="card-evidence" onClick={() => setShowFull((s) => !s)}>
           <span className="card-evidence-label">Evidence</span>
@@ -226,6 +234,7 @@ function IssueCard({ issue, onOpen }: { issue: Issue; onOpen: (i: Issue) => void
 }
 
 function DetailModal({ issue, onClose }: { issue: Issue; onClose: () => void }) {
+  const snip = SNIPPETS[issue.item_key]
   return (
     <div className="overlay" onClick={onClose}>
       <div className="detail" onClick={(e) => e.stopPropagation()}>
@@ -241,14 +250,29 @@ function DetailModal({ issue, onClose }: { issue: Issue; onClose: () => void }) 
           </div>
           <button className="detail-close" onClick={onClose}>×</button>
         </div>
+        {snip ? (
+          <div className="detail-img-wrap detail-img-fit">
+            <SheetSvg sheet={snip.sheet} bbox={snip.bbox} mode="full"
+              style={{ display: 'block', width: '100%', maxHeight: '60vh', background: '#fff', borderTop: '1px solid var(--bg)', borderBottom: '1px solid var(--bg)' }} />
+            <div className="detail-zoom-hint">bounding box · {snip.caption}</div>
+          </div>
+        ) : (
+          <div className="detail-desc">
+            This finding has no located drawing region (e.g., a whole-sheet or document-level
+            check), so there is no snippet to clip.
+          </div>
+        )}
         <div className="detail-evidence">
           <strong>Evidence</strong>
           <p>{issue.evidence}</p>
         </div>
-        <div className="detail-desc">
-          In the live tool this opens the cropped drawing snippet and the source-document
-          citation behind the finding. Snippets are omitted in this sample-data demo.
-        </div>
+        {snip && (
+          <div className="detail-desc">
+            The highlighted rectangle is the finding's <strong>bounding box</strong> on the page; the
+            card thumbnail is that region <strong>clipped</strong> from the sheet. (Synthetic sample
+            drawing — no real planset data.)
+          </div>
+        )}
         <div className="detail-foot">
           <button className="btn-cancel" onClick={onClose}>Close</button>
         </div>
